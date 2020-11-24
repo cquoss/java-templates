@@ -1,7 +1,7 @@
 package de.quoss.template;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Template with logging and command line checking
@@ -19,7 +19,7 @@ public class BasicTemplate {
 	/**
 	 * Logger
 	 */
-	private static final Logger LOGGER = Logger.getLogger(CLASS_NAME);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BasicTemplate.class);
 
 	/**
 	 * Standard constructor
@@ -39,7 +39,7 @@ public class BasicTemplate {
 	public void process(String[] args) throws TemplateException {
 
 		// Start message
-		LOGGER.log(Level.INFO, "Start");
+		LOGGER.info("Start");
 
 		// Check command line arguments
 		if (args.length != 0) {
@@ -47,7 +47,7 @@ public class BasicTemplate {
 		}
 
 		// End message
-		LOGGER.log(Level.INFO, "End");
+		LOGGER.info("End");
 
 	}
 
@@ -58,14 +58,14 @@ public class BasicTemplate {
 	 *            command line arguments
 	 */
 	public static void main(String[] args) {
-
+		int status = 0;
 		try {
 			new BasicTemplate().process(args);
 		} catch (TemplateException e) {
-			LOGGER.log(Level.SEVERE, "Error calling process logic", e);
-			System.exit(1);
+			LOGGER.error("Error calling process logic", e);
+			status = 1;
 		}
-
+		System.exit(status);
 	}
 
 }
